@@ -29,17 +29,26 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex'
   export default {
+
     data(){
       return{
         isChange:false
       }
 
     },
-
+  computed:{
+    ...mapState(['userinfo'])
+  },
     methods:{
      go(path){
-       this.$router.replace(path)
+       if(path==='/personal' && this.userinfo.name===undefined){
+         this.$router.replace('/login')
+       }else{
+         this.$router.replace(path)
+       }
+
      },
       colorChange(){
         if(this.$route.path==='/classification/sort'||this.$route.path==='/classification/brand'){

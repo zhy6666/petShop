@@ -1,5 +1,5 @@
-import {GET_CLASSAFIY, GET_CLASSAFIYBRAND, GET_HOMEDATA} from "./mutation-types";
-import {reqClassafiyBrand, reqClassafiySort, reqHomeData} from "../api";
+import {GET_CLASSAFIY, GET_CLASSAFIYBRAND, GET_HOMEDATA, GET_USERINFO} from "./mutation-types";
+import {reqClassafiyBrand, reqClassafiySort, reqHomeData, reqLogin} from "../api";
 
 export default {
   async getHomeData({commit},callback){
@@ -26,6 +26,15 @@ export default {
       const classafiyBrand =result.data
       commit(GET_CLASSAFIYBRAND,{classafiyBrand})
       callback && callback()
+    }
+  },
+  async recordLogin({commit},userinfo){
+
+    const result = await reqLogin(userinfo)
+    console.log(result);
+    if(result.code==0){
+      const userinfo =result.data
+      commit(GET_USERINFO,{userinfo})
     }
   },
 }
