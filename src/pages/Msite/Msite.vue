@@ -23,29 +23,25 @@
       </div>
     </div>
     <!--头部导航栏-->
-    <div class="header_nav swiper-container swiper-container-horizontal">
-      <ul class="nav_ul swiper-wrapper" style="transition-duration: 0ms; transform: translate3d(-2160px, 0px, 0px);">
-        <li class="nav_li swiper-slide" v-for="(homedata,index) in homeDatas.menus" :key="index">
+     <div class="header_nav" ref="pics">
+      <ul class="nav_ul" ref="ul">
+        <li class="nav_li" v-for="(menu,index) in homeDatas.menus" :key="index">
           <a>
-            <span>{{homedata.menu_name}}</span>
+            <span :class="menu.menu_name=='首页'?'titletextcolor':''">{{menu.menu_name}}</span>
+            <i v-show="menu.menu_name=='首页'"></i>
           </a>
         </li>
-
-
-
-        <!--<li class="nav_li"><a><span>狗狗主粮</span></a></li>-->
-        <!--<li class="nav_li"><a><span>零食</span></a></li>-->
-        <!--<li class="nav_li"><a><span>医疗保健</span></a></li>-->
-        <!--<li class="nav_li"><a><span>玩具</span></a></li>-->
       </ul>
     </div>
+    <!--导航栏底部线-->
+    <div></div>
     <!--首页轮播-->
     <nav>
-      <div class="swiper-container">
+      <div class="swiper-container" id="swiper-container">
         <div class="swiper-wrapper">
-          <div class="swiper-slide"><a><img src="./slider1.jpg"></a></div>
-          <div class="swiper-slide"><a><img src="./slider1.jpg"></a></div>
-          <div class="swiper-slide"><a><img src="./slider1.jpg"></a></div>
+          <div class="swiper-slide"  v-for="(dog_bannersrc,index) in homeDatas.dog_banner" :key="index">
+            <a><img :src="dog_bannersrc"/></a>
+          </div>
         </div>
         <!-- 如果需要分页器 -->
         <div class="swiper-pagination"></div>
@@ -54,56 +50,12 @@
     <!--轮播下面-->
     <div>
       <ul class="bander_ul">
-        <li class="bander_li">
+        <li class="bander_li" v-for="(menusrc,index) in homeDatas.menu_list" :key="index">
           <a>
-            <img src="https://img1.epetbar.com/2018-03/28/16/148a8a0c14d85ee6b0229770385d8f9f.jpg@!water">
+            <img :src="menusrc">
           </a>
         </li>
-        <li class="bander_li">
-          <a>
-            <img src="https://img1.epetbar.com/2018-02/02/14/9d335309be26f610a043e3bcc1e84b31.jpg@!water">
-          </a>
-        </li>
-        <li class="bander_li">
-          <a>
-            <img src="https://img1.epetbar.com/2018-02/02/14/f1d45afa77b1844883595df4be0b6b50.jpg@!water">
-          </a>
-        </li>
-        <li class="bander_li">
-          <a>
-            <img src="https://img1.epetbar.com/2018-02/02/14/55231bc567328e7c57cde19809769d99.jpg@!water">
-          </a>
-        </li>
-        <li class="bander_li">
-          <a>
-            <img src="https://img1.epetbar.com/2018-02/02/15/59043067d26a2e7a521394c796dfa571.jpg@!water">
-          </a>
-        </li>
-        <li class="bander_li">
-          <a>
-            <img src="https://img1.epetbar.com/2018-03/28/16/148a8a0c14d85ee6b0229770385d8f9f.jpg@!water">
-          </a>
-        </li>
-        <li class="bander_li">
-          <a>
-            <img src="https://img1.epetbar.com/2018-02/02/14/9d335309be26f610a043e3bcc1e84b31.jpg@!water">
-          </a>
-        </li>
-        <li class="bander_li">
-          <a>
-            <img src="https://img1.epetbar.com/2018-02/02/14/f1d45afa77b1844883595df4be0b6b50.jpg@!water">
-          </a>
-        </li>
-        <li class="bander_li">
-          <a>
-            <img src="https://img1.epetbar.com/2018-02/02/14/55231bc567328e7c57cde19809769d99.jpg@!water">
-          </a>
-        </li>
-        <li class="bander_li">
-          <a>
-            <img src="https://img1.epetbar.com/2018-02/02/15/59043067d26a2e7a521394c796dfa571.jpg@!water">
-          </a>
-        </li>
+
       </ul>
     </div>
     <!--新人专享-->
@@ -111,7 +63,7 @@
        <div class="swiper-wrapper2">
          <div class="swiper-slide2">
              <a href="https://sale.epet.com/m/1706/newWelfare.html?pet_type=dog&amp;fw=0" class="pointer">
-               <img src="https://img2.epetbar.com/nowater/2017-12/18/09/60c354a5d94be9fd114523ee77259c73.gif" lazy="loaded" style="height: 120px;">
+               <img :src="homeDatas.xinrenzhuanxiang" lazy="loaded" style="height: 120px;">
              </a>
            </div>
          </div>
@@ -124,9 +76,9 @@
             <img src="./buyeveryday.png">
           </a>
           <span class="home_suprise_text_right">
-              <span>本厂结束</span>
-              <span>12</span>:
-              <span>00</span>
+              <span>本场结束</span>
+              <span>{{homeDatas.meirifengqiang.jieshushijian1}}</span>:
+              <span>{{homeDatas.meirifengqiang.jieshushijian2}}</span>
               <span class="home_suprise_text_right_more">
                 <img src="./more.png">
               </span>
@@ -136,78 +88,17 @@
         <div class="swiper-container swiper-container-horizontal swiper-container-ios" id="suprise_image">
           <div class="swiper-wrapper">
             <!-- 一页显示多张，利用swiper -->
-            <div class="swiper-slide">
+            <div class="swiper-slide" v-for="(item,index) in homeDatas.meirifengqiang.foods">
               <a href="###">
                 <div>
-                  <img src="./s1.jpg">
+                  <img :src="item.imgurl">
                 </div>
-                <p class="price">￥4.80</p>
-                <p style="font-size:8px; color:#999">省43.20</p>
+                <p class="price">￥{{item.price}}</p>
+                <p style="font-size:8px; color:#999">省{{item.sheng}}</p>
               </a>
             </div>
-            <div class="swiper-slide">
-              <a href="###">
-                <div>
-                  <img src="./s2.jpg">
-                </div>
-                <p class="price">￥4.80</p>
-                <p style="font-size:8px; color:#999">省43.20</p>
-              </a>
-            </div>
-            <div class="swiper-slide">
-              <a href="###">
-                <div>
-                  <img src="./s3.jpg">
-                </div>
-                <p class="price">￥4.80</p>
-                <p style="font-size:8px; color:#999">省43.20</p>
-              </a>
-            </div>
-            <div class="swiper-slide">
-              <a href="###">
-                <div>
-                  <img src="./s4.jpg">
-                </div>
-                <p class="price">￥4.80</p>
-                <p style="font-size:8px; color:#999">省43.20</p>
-              </a>
-            </div>
-            <div class="swiper-slide">
-              <a href="###">
-                <div>
-                  <img src="./s5.jpg">
-                </div>
-                <p class="price">￥4.80</p>
-                <p style="font-size:8px; color:#999">省43.20</p>
-              </a>
-            </div>
-            <div class="swiper-slide">
-              <a href="###">
-                <div>
-                  <img src="./s6.jpg">
-                </div>
-                <p class="price">￥4.80</p>
-                <p style="font-size:8px; color:#999">省43.20</p>
-              </a>
-            </div>
-            <div class="swiper-slide">
-              <a href="###">
-                <div>
-                  <img src="./s7.jpg">
-                </div>
-                <p class="price">￥4.80</p>
-                <p style="font-size:8px; color:#999">省43.20</p>
-              </a>
-            </div>
-            <div class="swiper-slide">
-              <a href="###">
-                <div>
-                  <img src="./s8.jpg">
-                </div>
-                <p class="price">￥4.80</p>
-                <p style="font-size:8px; color:#999">省43.20</p>
-              </a>
-            </div>
+
+
           </div>
         </div>
       </div>
@@ -216,14 +107,15 @@
     <!--e宠国际-->
     <div class="national_wrap">
       <div class="nation_left">
-        <a href="http://wap.epetht.com/guide.html?pet_type=dog&amp;fw=0" class="default_bg"><img name="376x500" src="https://img2.epetbar.com/nowater/2017-12/13/09/1ec9379f83eb421db9a09195c9594e29.jpg@!water" lazy="loaded" style="height: 250px;"></a>
+        <a href="http://wap.epetht.com/guide.html?pet_type=dog&amp;fw=0" class="default_bg">
+          <img name="376x500" :src="homeDatas.special_list[0]" lazy="loaded" style="height: 250px;"></a>
       </div>
       <div class="nation_right">
         <a href="https://wap.epet.com/petschool/SchoolDetail.html?aid=116&amp;fw=0" class="default_bg">
-          <img name="374x250" src="https://img2.epetbar.com/nowater/2017-12/13/10/35bb7f3bd146cb9a9e74a935803f0d9a.jpg@!water" lazy="loaded" style="height: 125px;">
+          <img name="374x250" :src="homeDatas.special_list[1]" lazy="loaded" style="height: 125px;">
         </a>
         <a href="https://sale.epet.com/m/mould/fashion/detail.html?id=149&amp;fw=0" class="default_bg">
-          <img name="374x250" src="https://img2.epetbar.com/nowater/2018-04/03/09/06273e732679cfcf9e4a5e98d1cc0e8c.jpg@!water" lazy="loaded" style="height: 125px;">
+          <img name="374x250" :src="homeDatas.special_list[2]" lazy="loaded" style="height: 125px;">
         </a>
       </div>
     </div>
@@ -240,25 +132,25 @@
     <!--超频视频-->
     <div class="rela">
         <div class="leftimg titclass">
-          <img src="https://img2.epetbar.com/nowater/2017-12/20/15/38688d8d92c7da7aae64eda8b8bb3a94.jpg"></div> <!----> <div>
+          <img :src="homeDatas.chaopinshipin.chaopinimg"></div> <!----> <div>
         <div>
           <div class="more titclass">
           <a href="https://wap.epet.com/main.html?menu_param=121&amp;pet_type=dog&amp;is_single=1&amp;fw=0">
-            <img src="https://img2.epetbar.com/nowater/2017-12/20/15/0855ecf27a6ca47b32170caab2503ddd.jpg"></a>
+            <img :src="homeDatas.chaopinshipin.gengduoimg"></a>
           </div></div> <!----></div>
       </div>
     <div class="fashion">
       <div>
         <ul class="cmVideoList cmVideoListIndex">
           <li>
-            <a href="https://wap.epet.com/article/video/View.html?vid=16&amp;fw=0">
+            <a :href="homeDatas.chaopinshipin.href">
               <div class="relative imgBox overflow" style="height: 210.5px;">
-                <img src="https://img1.epetbar.com/2018-04/15/22/822b52d6f9a909d5e427efe9cef5a91e.jpg?x-oss-process=style/waterfall&amp;$1=500" lazy="loaded">
+                <img :src="homeDatas.chaopinshipin.shipinimg" lazy="loaded">
               </div>
               <div class="ft12 c999 pad10 ftc">
-                <div class="textover c333">SodaPup 易拉罐漏食狗玩具 口感软弹洁牙护牙</div>
+                <div class="textover c333">{{homeDatas.chaopinshipin.miaoshu}}</div>
                 <div class="text">
-                  <i>9274</i><span class="ml10 mr10">|</span>01:29
+                  <i>{{homeDatas.chaopinshipin.leftmiaoshu}}</i><span class="ml10 mr10">|</span>{{homeDatas.chaopinshipin.rightmiaoshu}}
                 </div>
               </div>
             </a>
@@ -268,15 +160,19 @@
     </div>
     <!--线-->
     <div style="height: 10px; background-color: #f1f1f1"></div>
-    <!--愛寵vxingqiu -->
+    <!--爱宠星球 -->
     <div class="aichong">
       <div class="left">
-        <a href="https://wap.epet.com/vip/Main.html?fw=0" class="default_bg"><img name="376x199" src="https://img2.epetbar.com/nowater/2018-02/05/14/4c32811744e04f6b63632b42a0d5325d.jpg@!water" lazy="loaded" style="height: 99.5px;"></a>
-        <a href="https://wap.epet.com/vip/lottery/Main.html?fw=0" class="default_bg"><img name="376x201" src="https://img2.epetbar.com/nowater/2018-02/05/14/fa66a0c8437b6fb8137c58d9b6ccb1c6.jpg@!water" lazy="loaded" style="height: 100.5px;"></a>
+        <a href="https://wap.epet.com/vip/Main.html?fw=0" class="default_bg">
+          <img name="376x199" :src="homeDatas.vip_services[0]" lazy="loaded" style="height: 99.5px;"></a>
+        <a href="https://wap.epet.com/vip/lottery/Main.html?fw=0" class="default_bg">
+          <img name="376x201" :src="homeDatas.vip_services[1]" lazy="loaded" style="height: 100.5px;"></a>
       </div >
       <div class="right">
-        <a href="http://wap.epet.com/vip/offline/CityIndex.html?fw=0" class="default_bg"><img name="374x199" src="https://img2.epetbar.com/nowater/2018-02/05/14/9aa462284ec8a79694fa5c9ce062d5ab.jpg@!water" lazy="loaded" style="height: 99.5px;"></a>
-        <a href="https://wap.epet.com/vip/taste/Main.html?fw=0" class="default_bg"><img name="374x201" src="https://img2.epetbar.com/nowater/2018-02/05/14/6e3a2cb186e1028d481940c42fb54732.jpg@!water" lazy="loaded" style="height: 100.5px;"></a>
+        <a href="http://wap.epet.com/vip/offline/CityIndex.html?fw=0" class="default_bg">
+          <img name="374x199" :src="homeDatas.vip_services[2]" lazy="loaded" style="height: 99.5px;"></a>
+        <a href="https://wap.epet.com/vip/taste/Main.html?fw=0" class="default_bg">
+          <img name="374x201" :src="homeDatas.vip_services[3]" lazy="loaded" style="height: 100.5px;"></a>
       </div>
     </div>
     <!--线-->
@@ -294,34 +190,10 @@
     <!--品牌特賣下面-->
     <div class="p_p_t_m">
       <ul>
-        <li>
+        <li  v-for="(pinpaisrc,index) in homeDatas.pinpai_temai_list" :key="index">
           <div class="divimg" style="width: 100%;">
-            <a href="http://sale.epetht.com/m/mould/activity/ztMjc3NQ%3D%3D.html?tid=2775&amp;fw=0" class="default_bg">
-              <img name="750x320" src="https://img2.epetbar.com/nowater/2018-04/16/10/34f6b8bc182992fc023ad668722d45f6.jpg@!water" lazy="loaded" style="height: 160px;">
-            </a>
-          </div>
-          <div style="height: 10px; background-color: #f1f1f1"></div>
-        </li>
-        <li>
-          <div class="divimg" style="width: 100%;">
-            <a href="http://sale.epetht.com/m/mould/activity/ztMjc3NQ%3D%3D.html?tid=2775&amp;fw=0" class="default_bg">
-              <img name="750x320" src="https://img2.epetbar.com/nowater/2018-04/16/10/34f6b8bc182992fc023ad668722d45f6.jpg@!water" lazy="loaded" style="height: 160px;">
-            </a>
-          </div>
-          <div style="height: 10px; background-color: #f1f1f1"></div>
-        </li>
-        <li>
-          <div class="divimg" style="width: 100%;">
-            <a href="http://sale.epetht.com/m/mould/activity/ztMjc3NQ%3D%3D.html?tid=2775&amp;fw=0" class="default_bg">
-              <img name="750x320" src="https://img2.epetbar.com/nowater/2018-04/16/10/34f6b8bc182992fc023ad668722d45f6.jpg@!water" lazy="loaded" style="height: 160px;">
-            </a>
-          </div>
-          <div style="height: 10px; background-color: #f1f1f1"></div>
-        </li>
-        <li>
-          <div class="divimg" style="width: 100%;">
-            <a href="http://sale.epetht.com/m/mould/activity/ztMjc3NQ%3D%3D.html?tid=2775&amp;fw=0" class="default_bg">
-              <img name="750x320" src="https://img2.epetbar.com/nowater/2018-04/16/10/34f6b8bc182992fc023ad668722d45f6.jpg@!water" lazy="loaded" style="height: 160px;">
+            <a :href="pinpaisrc.href" class="default_bg">
+              <img name="750x320" :src="pinpaisrc.imgurl" lazy="loaded" style="height: 160px;">
             </a>
           </div>
           <div style="height: 10px; background-color: #f1f1f1"></div>
@@ -331,11 +203,11 @@
     <!--萌重説-->
     <div class="rela">
       <div class="leftimg titclass">
-        <img src="https://img2.epetbar.com/nowater/2017-12/13/14/77c0017136e51145788b7607a3a0914c.jpg"></div> <!----> <div>
+        <img :src="homeDatas.mengchongshuo.mengchongshuoimg"></div> <!----> <div>
       <div>
         <div class="more titclass">
-          <a href="https://wap.epet.com/main.html?menu_param=121&amp;pet_type=dog&amp;is_single=1&amp;fw=0">
-            <img src="https://img2.epetbar.com/nowater/2017-12/20/15/0855ecf27a6ca47b32170caab2503ddd.jpg"></a>
+          <a :href="homeDatas.mengchongshuo.href">
+            <img :src="homeDatas.mengchongshuo.gengduoimg"></a>
         </div></div> <!----></div>
     </div>
     <!--萌重説下面-->
@@ -345,12 +217,12 @@
           <li>
             <a href="https://wap.epet.com/article/video/View.html?vid=116&fw=0">
               <div class="relative imgBox overflow" style="height: 210.5px;">
-                <img src="https://img1.epetbar.com/2017-12/13/16/5837d50b4993a5de2aff2b26ce8cf3d5.png?x-oss-process=style/waterfall&amp;$1=500" lazy="loaded">
+                <img :src="homeDatas.mengchongshuo.shipinimg" lazy="loaded">
               </div>
               <div class="ft12 c999 pad10 ftc">
-                <div class="textover c333">第三期-汪星人你的大姨妈来了吗？</div>
+                <div class="textover c333">{{homeDatas.mengchongshuo.miaoshu}}</div>
                 <div class="text">
-                  <i>9274</i><span class="ml10 mr10">|</span>01:29
+                  <i>{{homeDatas.mengchongshuo.leftmiaoshu}}</i><span class="ml10 mr10">|</span>{{homeDatas.mengchongshuo.rightmiaoshu}}
                 </div>
               </div>
             </a>
@@ -363,11 +235,11 @@
     <!--小剧场-->
     <div class="rela">
       <div class="leftimg titclass">
-        <img src="https://img2.epetbar.com/nowater/2017-12/13/13/e747ca83834dbd4d1f9663f11f7bf146.jpg"></div> <!----> <div>
+        <img :src="homeDatas.xiaojuchang.xiaojuchangimg"></div> <!----> <div>
       <div>
         <div class="more titclass">
           <a href="https://wap.epet.com/article/video/List.html?do=AdorableVideo&fw=0">
-            <img src="https://img2.epetbar.com/nowater/2017-12/20/15/0855ecf27a6ca47b32170caab2503ddd.jpg"></a>
+            <img :src="homeDatas.xiaojuchang.gengduoimg"></a>
         </div></div> <!----></div>
     </div>
     <!--小剧场下面-->
@@ -375,14 +247,14 @@
       <div>
         <ul class="cmVideoList cmVideoListIndex">
           <li>
-            <a href="https://wap.epet.com/article/video/View.html?vid=171&fw=0">
+            <a :href="homeDatas.xiaojuchang.href">
               <div class="relative imgBox overflow" style="height: 210.5px;">
-                <img src="https://img1.epetbar.com/2018-04/10/16/98507cf93340adddcea4a44701891a4b.png?x-oss-process=style/waterfall&amp;$1=500" lazy="loaded">
+                <img :src="homeDatas.xiaojuchang.shipinimg" lazy="loaded">
               </div>
               <div class="ft12 c999 pad10 ftc">
-                <div class="textover c333">一个位德艺双馨老艺术家（指的是就我）的日常</div>
+                <div class="textover c333">{{homeDatas.xiaojuchang.miaoshu}}</div>
                 <div class="text">
-                  <i>9274</i><span class="ml10 mr10">|</span>01:29
+                  <i>{{homeDatas.xiaojuchang.leftmiaoshu}}</i><span class="ml10 mr10">|</span>{{homeDatas.xiaojuchang.rightmiaoshu}}
                 </div>
               </div>
             </a>
@@ -428,24 +300,52 @@
       ...mapState(['homeDatas'])
     },
     mounted() {
-      this.$nextTick(() => {
-        let swiper = new Swiper('.swiper-container', {
-          loop: true,
-          pagination: {
-            el: '.swiper-pagination',
-          }
+      this.$store.dispatch('getHomeData', () => {
+        this.$nextTick(() => {
+
+          //轮播横向滑动
+          let swiper = new Swiper('#swiper-container', {
+            loop: true,
+            pagination: {
+              el: '.swiper-pagination',
+            },
+            autoplay: {
+              delay: 2000,
+              stopOnLastSlide: false,
+              disableOnInteraction: true,
+            },
+            effect : 'cube',
+          })
+
+          //每日疯抢横向滑动
+          let newSwiper = new Swiper('#suprise_image', {
+            slidesPerView: 4,
+            spaceBetween: 30,
+          })
+
+          //首页垂直滑动
+          // this.reascroll = new BScroll(this.$refs.info,{click:true})
+
+          //导航横向设置滑动
+          this.picsScroll = new BScroll(this.$refs.pics, {click: true, scrollX: true})
+          // 指定ul的样式宽度(前提是有数据)
+          this.homeDatas.menus && this.setUlWidth()
         })
-
-        let newSwiper = new Swiper('#suprise_image', {
-          slidesPerView: 4,
-          spaceBetween: 30,
-        })
-
-        this.reascroll = new BScroll(this.$refs.info,{click:true})
-
       })
+    },
 
-    }
+    methods: {
+      /*
+         导航设置宽度
+        */
+      setUlWidth () {
+        const ul = this.$refs.ul
+        const liWidth = 75
+        const space = 6
+        const size = this.homeDatas.menus.length
+        ul.style.width = (liWidth + space) * size - space + 'px'
+      }
+    },
   }
 </script>
 
@@ -454,11 +354,12 @@
     width 100%
     height 100%
     .appdowimg
+      position relative
       a
         .placed_img
           width 100%
       .closeBtn
-        position fixed
+        position absolute
         top 20px
         left 2%
         width 20px
@@ -491,22 +392,36 @@
           padding-top 2px
 
     .header_nav
+      width 100%
+      overflow: hidden
+      white-space: nowrap
       .nav_ul
-        display flex
+        font-size: 0
         .nav_li
-          width 80px
+          position relative
+          display: inline-block
+          width: 75px
+          height: 36px
           text-align center
           span
-            width 64px
-            text-align center
             font-size 14px
-            height 36px
+            height 34px
+            width 100%
             line-height 36px
             color #666666
-
+          .titletextcolor
+            color #e73f85
+          i
+            position absolute
+            bottom 1px
+            left -12%
+            width 33.59px
+            margin-left 29px
+            background #e73f85
+            height 2px
     .swiper-container
       width 100%
-      height 176px
+      height 160px
       .swiper-wrapper
         width 100%
         height 100%
@@ -522,11 +437,10 @@
               height 100%
     .bander_ul
      width 100%
-     height 198px
-
+     height 180px
      .bander_li
        width 20%
-       height 99.36px
+       height 90px
        float left
        a
         width 100%
@@ -616,11 +530,10 @@
                   color red
     .national_wrap
      width 100%
-     height 250px
+     height 253px
      display flex
      .nation_left
       flex 1
-      background pink
       a
        img
         width 100%
@@ -720,4 +633,6 @@
         color red
        a
         font-size 13px
+
+
 </style>

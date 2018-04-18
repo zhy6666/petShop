@@ -12,9 +12,7 @@
   import ShoppingCart from './pages/ShoppingCart/ShoppingCart'
   import Personal from './pages/Personal/Personal'
 export default {
-    mounted(){
-      this.$store.dispatch('getHomeData')
-    },
+
     components:{FooterGuide,Msite,Classification,ShoppingCart,Personal}
 }
 </script>

@@ -4,6 +4,8 @@ import Msite from '../pages/Msite/Msite'
 import Classification from '../pages/Classification/Classification'
 import Personal from '../pages/Personal/Personal'
 import ShoppingCart from '../pages/ShoppingCart/ShoppingCart'
+import Sort from '../pages/Classification/sort/Sort'
+import Brand from '../pages/Classification/Brand/Brand'
 Vue.use(VueRouter)
 
 export default new VueRouter({
@@ -14,7 +16,22 @@ export default new VueRouter({
     },
     {
       path:'/classification',
-      component:Classification
+      component:Classification,
+      children:[
+        {
+          path:'/classification/sort',
+          component:Sort
+        },
+        {
+          path:'/classification/brand',
+          component:Brand
+        },
+        {
+          path:'/',
+          redirect:'/classification/sort'
+
+        }
+      ]
     },
     {
       path:'/shoppingcart',

@@ -6,7 +6,7 @@
       </span>
       <span>首页</span>
     </a>
-    <a href="javascript:;" class="guide_item" :class="{on:$route.path==='/classification'}" @click="go('/classification')">
+    <a href="javascript:;" class="guide_item" :class="{on:colorChange()}" @click="go('/classification')">
     <span class="item_icon">
       <i class="iconfont icon-search"></i>
     </span>
@@ -30,10 +30,25 @@
 
 <script>
   export default {
+    data(){
+      return{
+        isChange:false
+      }
+
+    },
+
     methods:{
      go(path){
        this.$router.replace(path)
-     }
+     },
+      colorChange(){
+        if(this.$route.path==='/classification/sort'||this.$route.path==='/classification/brand'){
+          this.isChange=true
+        }else{
+          this.isChange=false
+        }
+        return this.isChange
+      }
     }
   }
 </script>
